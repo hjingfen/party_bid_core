@@ -2,7 +2,7 @@ describe("Activity", function () {
 
 
     beforeEach(function () {
-        init_activity_database()
+        init_activity_database();
     });
 
     afterEach(function () {
@@ -11,10 +11,9 @@ describe("Activity", function () {
 
     it("should first activity was created on creating", function () {
         var activity_name = "first activity";
-
         var activity = new Activity(activity_name);
-        activity.create();
-        activity.active();
+        activity.create(activity_name);
+        activity.active(activity_name);
 
 
         var activity_json = JSON.parse(localStorage.activities);
