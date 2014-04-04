@@ -5,13 +5,7 @@ function Activity(activity_name){
 }
 Activity.prototype.create = function(activity_name){
     var activities = JSON.parse(localStorage.activities);
-    var first_activity =
-    {
-        name:activity_name,
-        sign_ups: [],
-        bids: []
-    }
-    activities.push(first_activity);
+    activities.push(this);
     localStorage.setItem('activities',JSON.stringify(activities));
 }
 Activity.prototype.active = function(activity_name){
