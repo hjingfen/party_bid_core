@@ -15,7 +15,7 @@ Bid.prototype.create_new_bid = function(current_activity){
 transform_bids_to_view_model = function(current_activity){
     var activities = JSON.parse(localStorage.activities);
     var current_activity = _.filter(activities, function(activity){
-        return activity['name'] == localStorage.current_activity;
+        return activity['name'] == current_activity;
     });
     return current_activity[0].bids;
 }

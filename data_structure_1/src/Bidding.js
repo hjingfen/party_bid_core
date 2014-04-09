@@ -25,3 +25,16 @@ Bidding.process_bidding_sms = function(sms_json){
         }
     }
 }
+transform_biddings_to_view_model = function(current_activity,current_bid){
+    var activities = JSON.parse(localStorage.activities);
+    var current_activity = _.filter(activities, function(activity){
+        return activity['name'] == current_activity;
+    });
+    var biddings = _.filter(current_activity[0].bids, function(c){
+        return c.name == current_bid;
+    });
+    var sort_by_biddings = _.sortBy(biddings[0].biddings,function(bidding){return (bidding.price)});
+    var group_price = _.groupBy(sort_by_biddings,function(s){return s.price});
+    var un_repeat = _.filter(group_price,function(g){return g.length == 1})
+    return _.first(un_repeat);
+}
