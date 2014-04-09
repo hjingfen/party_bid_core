@@ -4,20 +4,20 @@ Bidding.process_bidding_sms = function(sms_json){
     if(localStorage.is_bidding == 'true'){
         var activities = JSON.parse(localStorage.activities);
         var current_bid = localStorage.current_bid;
-        var current_activity = _.filter(activities, function(activity){
+        var current_activity = _.find(activities, function(activity){
              return activity['name'] == localStorage.current_activity;
         });
         var biddings = [];
         var bidding = {};
         bidding['price'] = sms_json.messages[0].message.replace(/\s||\S/g,'').toLocaleLowerCase().replace(/^jj/,'');
         bidding['phone'] = sms_json.messages[0].phone;
-        if(_.find(current_activity[0]['sign_ups'],function(c){return c.phone == bidding.phone}) != undefined){
-            var sign_up_applicant = _.find(current_activity[0]['sign_ups'],function(c){return c.phone == bidding.phone});
+        if(_.find(current_activity['sign_ups'],function(c){return c.phone == bidding.phone}) != undefined){
+            var sign_up_applicant = _.find(current_activity['sign_ups'],function(c){return c.phone == bidding.phone});
             bidding['name'] = sign_up_applicant.name;
             if(_.find(biddings,function(bidding){return bidding.phone == bidding.phone}) == undefined){
                 biddings.push(bidding);
             }
-            current_activity = _.map(current_activity[0].bids, function(c){
+            current_activity = _.map(current_activity.bids, function(c){
                 return  c.name == current_bid ? c.biddings = biddings : '';
 
             });
