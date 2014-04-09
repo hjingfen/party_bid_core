@@ -20,8 +20,8 @@ SignUp.process_sign_up_sms = function(sms_json){
 }
 SignUp.render_sign_ups = function(current_activity){
     var activities = JSON.parse(localStorage.activities);
-    var current_activity = _.filter(activities, function(activity){
+    var current_activity = _.find(activities, function(activity){
         return activity['name'] == current_activity;
     });
-    return _.filter(current_activity[0].sign_ups,function(c){return c.name})
+    return _.filter(current_activity.sign_ups,function(c){return c.name})
 }
