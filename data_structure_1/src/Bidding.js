@@ -1,6 +1,6 @@
 function Bidding(){
 }
-Bidding.process_bid_sign_up_sms = function(sms_json){
+Bidding.process_bidding_sms = function(sms_json){
     if(localStorage.is_bidding == 'true'){
         var activities = JSON.parse(localStorage.activities);
         var current_bid = localStorage.current_bid;
