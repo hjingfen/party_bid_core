@@ -18,4 +18,10 @@ SignUp.process_sign_up_sms = function(sms_json){
         localStorage.setItem('activities',JSON.stringify(activities));
     }
 }
-
+SignUp.render_sign_ups = function(current_activity){
+    var activities = JSON.parse(localStorage.activities);
+    var current_activity = _.filter(activities, function(activity){
+        return activity['name'] == current_activity;
+    });
+    return _.filter(current_activity[0].sign_ups,function(c){return c.name})
+}
