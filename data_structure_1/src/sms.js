@@ -5,6 +5,7 @@ function notify_sms_received(sms_json){
             SignUp.process_sign_up_sms(sms_json);
         },
         JJ:function(){
+            Bidding.process_bid_sign_up_sms(sms_json);
         }
     }
     if (judge_sms[first_two_characters]) {

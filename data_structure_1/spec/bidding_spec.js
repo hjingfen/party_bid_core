@@ -52,7 +52,6 @@ describe("Bidding", function () {
 
         localStorage.is_bidding = "true";
         notify_sms_received(sms_json);
-
         var activities = JSON.parse(localStorage.activities);
         expect(activities[1].bids.length).toBe(1);
         expect(activities[1].bids[0].biddings[0].name).toBe("仝键");

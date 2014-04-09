@@ -17,6 +17,5 @@ SignUp.process_sign_up_sms = function(sms_json){
         });
         localStorage.setItem('activities',JSON.stringify(activities));
     }
-
 }
 
