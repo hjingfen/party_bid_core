@@ -1,13 +1,16 @@
-function SignUp(){
+function SignUp(name,phone){
+    this.name = name;
+    this.phone = phone;
 }
 SignUp.process_sign_up_sms = function(sms_json){
     if(localStorage.is_signing_up == 'true'){
         var activities = JSON.parse(localStorage.activities);
         var current_activity = localStorage.current_activity;
         var sign_ups = [];
-        var sign_up = {};
-        sign_up['name'] = sms_json.messages[0].message.replace(/\s||\S/g,'').toLocaleLowerCase().replace(/^bm/,'');
-        sign_up['phone'] = sms_json.messages[0].phone;
+        var name = sms_json.messages[0].message.replace(/\s||\S/g,'').toLocaleLowerCase().replace(/^bm/,'');
+        var phone = sms_json.messages[0].phone;
+        var sign_up = new SignUp(name,phone);
+
         if(_.find(sign_ups,function(sign_up){return sign_up.phone == sign_up.phone}) == undefined){
             sign_ups.push(sign_up);
         }
