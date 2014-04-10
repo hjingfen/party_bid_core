@@ -12,10 +12,12 @@ Bidding.process_bidding_sms = function(sms_json){
         var price = sms_json.messages[0].message.replace(/\s||\S/g,'').toLocaleLowerCase().replace(/^jj/,'');
         var phone = sms_json.messages[0].phone;
         var bidding = new Bidding(price,phone);
-        if(_.find(current_activity['sign_ups'],function(c){return c.phone == bidding.phone}) != undefined){
+        var is_sign_up = Bidding.is_sign_up(current_activity,bidding);
+        var is_not_bidding = Bidding.is_not_bidding(biddings);
+        if(is_sign_up){
             var sign_up_applicant = _.find(current_activity['sign_ups'],function(c){return c.phone == bidding.phone});
             bidding['name'] = sign_up_applicant.name;
-            if(_.find(biddings,function(bidding){return bidding.phone == bidding.phone}) == undefined){
+            if(is_not_bidding){
                 biddings.push(bidding);
             }
             current_activity = _.map(current_activity.bids, function(c){
@@ -25,6 +27,12 @@ Bidding.process_bidding_sms = function(sms_json){
             localStorage.setItem('activities',JSON.stringify(activities));
         }
     }
+}
+Bidding.is_sign_up = function(current_activity,bidding){
+    return _.find(current_activity['sign_ups'],function(c){return c.phone == bidding.phone}) != undefined ? true:false;
+}
+Bidding.is_not_bidding = function(biddings){
+    return _.find(biddings,function(bidding){return bidding.phone == bidding.phone}) == undefined ? true:false;
 }
 transform_biddings_to_view_model = function(current_activity,current_bid){
     var activities = JSON.parse(localStorage.activities);
@@ -39,3 +47,4 @@ transform_biddings_to_view_model = function(current_activity,current_bid){
     var un_repeat = _.filter(group_price,function(g){return g.length == 1})
     return _.first(un_repeat);
 }
+
