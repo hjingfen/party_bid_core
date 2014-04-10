@@ -35,6 +35,10 @@ Bidding.is_sign_up = function(current_activity_id,bidding){
     var activities = JSON.parse(localStorage.activities);
     return _.find(activities[current_activity_id].sign_ups,function(a){return a.phone == bidding.phone}) != undefined ? true:false;
 }
+transform_bids_to_view_model = function(current_activity_id){
+    var activities = JSON.parse(localStorage.activities);
+    return activities[current_activity_id].bids;
+}
 transform_biddings_to_view_model = function(current_activity_id,current_bid){
     var activities = JSON.parse(localStorage.activities);
     var biddings = activities[current_activity_id].biddings[current_bid];
