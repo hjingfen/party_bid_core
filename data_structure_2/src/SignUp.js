@@ -18,8 +18,8 @@ SignUp.process_sign_up_sms = function(sms_json){
         localStorage.setItem('activities',JSON.stringify(activities));
     }
 }
-SignUp.is_not_sign_up = function(sign_ups){
-    return _.find(sign_ups,function(sign_up){return sign_up.phone == sign_up.phone}) == undefined ? true:false;
+SignUp.is_not_sign_up = function(sign_ups,sign_up){
+    return _.find(sign_ups,function(s){return s.phone == sign_up.phone}) == undefined ? true:false;
 }
 SignUp.current_activity_id = function(){
     return localStorage.current_activity;

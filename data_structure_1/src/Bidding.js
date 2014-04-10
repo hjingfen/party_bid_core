@@ -31,8 +31,8 @@ Bidding.process_bidding_sms = function(sms_json){
 Bidding.is_sign_up = function(current_activity,bidding){
     return _.find(current_activity['sign_ups'],function(c){return c.phone == bidding.phone}) != undefined ? true:false;
 }
-Bidding.is_not_bidding = function(biddings){
-    return _.find(biddings,function(bidding){return bidding.phone == bidding.phone}) == undefined ? true:false;
+Bidding.is_not_bidding = function(biddings,bidding){
+    return _.find(biddings,function(b){return b.phone == bidding.phone}) == undefined ? true:false;
 }
 transform_biddings_to_view_model = function(current_activity,current_bid){
     var activities = JSON.parse(localStorage.activities);
