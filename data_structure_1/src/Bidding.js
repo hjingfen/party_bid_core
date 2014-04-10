@@ -39,12 +39,15 @@ transform_biddings_to_view_model = function(current_activity,current_bid){
     var current_act = _.find(activities, function(activity){
         return activity['name'] == current_activity;
     });
-    var biddings = _.find(current_act.bids, function(c){
+    var biddings_info = _.find(current_act.bids, function(c){
         return c.name == current_bid;
     });
-    var sort_by_biddings = _.sortBy(biddings.biddings,function(bidding){return (bidding.price)});
-    var group_price = _.groupBy(sort_by_biddings,function(s){return s.price});
-    var un_repeat = _.filter(group_price,function(g){return g.length == 1})
-    return _.first(un_repeat);
+    var biddings = biddings_info.biddings;
+    return _.chain(biddings)
+        .sortBy(function(bidding){return bidding.price})
+        .groupBy(function(bidding){return bidding.price})
+        .filter(function(bidding){return bidding.length == 1})
+        .first()
+        .value();
 }
 
