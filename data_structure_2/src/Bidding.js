@@ -2,7 +2,7 @@ function Bidding (price,phone){
     this.price = price;
     this.phone = phone;
 }
-Bidding.create_new_bid = function (count) {
+Bidding.create_new_bid = function () {
     var activities = JSON.parse(localStorage.activities);
     var activity_id = SignUp.current_activity_id();
     var activity = activities[activity_id];
