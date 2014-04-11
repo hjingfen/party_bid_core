@@ -7,6 +7,7 @@ Activity.prototype.create = function(){
     localStorage.current_activity = Activity.act_id();
     activities.push(this);
     localStorage.setItem('activities',JSON.stringify(activities));
+    localStorage.activity_id_generator = Activity.act_id();
 }
 Activity.act_id = function(){
     var activities = JSON.parse(localStorage.activities);
