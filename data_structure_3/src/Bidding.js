@@ -36,8 +36,7 @@ Bidding.is_sign_up = function(current_activity_id,bidding){
 }
 
 Bidding.render_biddings = function(activity_id,bid_name){
-    var sign_ups = JSON.parse(localStorage.sign_ups);
-    var current_sign_ups = _.filter(sign_ups,function(s){return s.activity_id == activity_id});
+    var current_sign_ups = SignUp.render_sign_ups(activity_id);
     var biddings = Bidding.biddings(activity_id,bid_name);
     var min_not_repeat =  _.chain(biddings)
         .sortBy(function(bidding){return bidding.price})
