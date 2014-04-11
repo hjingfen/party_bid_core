@@ -22,3 +22,7 @@ SignUp.is_not_sign_up = function(sign_ups,sign_up){
 SignUp.current_activity_id = function(){
     return localStorage.current_activity;
 }
+SignUp.render_sign_ups = function(activity_id){
+    var sign_ups = JSON.parse(localStorage.sign_ups);
+    return _.filter(sign_ups,function(s){return s.activity_id == activity_id})
+}
