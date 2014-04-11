@@ -2,6 +2,7 @@ function Bidding (price,phone){
     this.price = price;
     this.phone = phone;
 }
+
 Bidding.create_new_bid = function () {
     var activities = JSON.parse(localStorage.activities);
     var activity_id = SignUp.current_activity_id();
@@ -12,6 +13,7 @@ Bidding.create_new_bid = function () {
     activities[activity_id].biddings[bid] = [];
     localStorage.setItem("activities", JSON.stringify(activities));
 }
+
 Bidding.process_bidding_sms = function(sms_json){
     var activities = JSON.parse(localStorage.activities);
     var current_activity_id = SignUp.current_activity_id();
@@ -28,17 +30,21 @@ Bidding.process_bidding_sms = function(sms_json){
     }
     localStorage.setItem('activities',JSON.stringify(activities));
 }
+
 Bidding.is_not_bidding = function(biddings,bidding){
-    return _.find(biddings,function(b){return b.phone == bidding.phone}) == undefined ? true:false;
+    return _.find(biddings,function(b){return b.phone == bidding.phone}) == undefined;
 }
+
 Bidding.is_sign_up = function(current_activity_id,bidding){
     var activities = JSON.parse(localStorage.activities);
-    return _.find(activities[current_activity_id].sign_ups,function(a){return a.phone == bidding.phone}) != undefined ? true:false;
+    return _.find(activities[current_activity_id].sign_ups,function(a){return a.phone == bidding.phone}) != undefined;
 }
+
 transform_bids_to_view_model = function(current_activity_id){
     var activities = JSON.parse(localStorage.activities);
     return activities[current_activity_id].bids;
 }
+
 transform_biddings_to_view_model = function(current_activity_id,current_bid){
     var activities = JSON.parse(localStorage.activities);
     var biddings = activities[current_activity_id].biddings[current_bid];

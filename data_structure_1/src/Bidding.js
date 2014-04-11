@@ -2,6 +2,7 @@ function Bidding(price,phone){
     this.price = price;
     this.phone = phone;
 }
+
 Bidding.process_bidding_sms = function(sms_json){
     var activities = JSON.parse(localStorage.activities);
     var current_activity = _.find(activities, function(activity){
@@ -18,26 +19,22 @@ Bidding.process_bidding_sms = function(sms_json){
         bidding['name'] = sign_up_applicant.name;
         biddings.push(bidding);
         current_activity = _.map(current_activity.bids, function(c){
-            return  c.name == localStorage.current_bid ? c.biddings = biddings : '';
+            return  c.biddings = c.name == localStorage.current_bid ? biddings : '';
         });
         localStorage.setItem('activities',JSON.stringify(activities));
     }
 }
+
 Bidding.is_sign_up = function(current_activity,bidding){
-    return _.find(current_activity['sign_ups'],function(c){return c.phone == bidding.phone}) != undefined ? true:false;
+    return _.find(current_activity['sign_ups'],function(c){return c.phone == bidding.phone}) != undefined;
 }
+
 Bidding.is_not_bidding = function(biddings,bidding){
-    return _.find(biddings,function(b){return b.phone == bidding.phone}) == undefined ? true:false;
+    return _.find(biddings,function(b){return b.phone == bidding.phone}) == undefined;
 }
+
 transform_biddings_to_view_model = function(current_activity,current_bid){
-    var activities = JSON.parse(localStorage.activities);
-    var current_act = _.find(activities, function(activity){
-        return activity['name'] == current_activity;
-    });
-    var biddings_info = _.find(current_act.bids, function(c){
-        return c.name == current_bid;
-    });
-    var biddings = biddings_info.biddings;
+    var biddings = Bidding.biddings(current_activity,current_bid).biddings;
     return _.chain(biddings)
         .sortBy(function(bidding){return bidding.price})
         .groupBy(function(bidding){return bidding.price})
@@ -46,3 +43,12 @@ transform_biddings_to_view_model = function(current_activity,current_bid){
         .value();
 }
 
+Bidding.biddings = function(current_activity,current_bid){
+    var activities = JSON.parse(localStorage.activities);
+    var current_act = _.find(activities, function(activity){
+        return activity['name'] == current_activity;
+    });
+    return _.find(current_act.bids, function(c){
+        return c.name == current_bid;
+    });
+}

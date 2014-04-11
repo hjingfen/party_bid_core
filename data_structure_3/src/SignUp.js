@@ -3,6 +3,7 @@ function SignUp(name,phone,activity_id){
     this.phone = phone;
     this.activity_id = activity_id;
 }
+
 SignUp.process_sign_up_sms = function(sms_json){
     var activities = JSON.parse(localStorage.activities);
     var activity_id = SignUp.current_activity_id();
@@ -16,12 +17,15 @@ SignUp.process_sign_up_sms = function(sms_json){
     }
     localStorage.setItem('sign_ups',JSON.stringify(sign_ups));
 }
+
 SignUp.is_not_sign_up = function(sign_ups,sign_up){
-    return _.find(sign_ups,function(s){return s.phone == sign_up.phone}) == undefined ? true:false;
+    return _.find(sign_ups,function(s){return s.phone == sign_up.phone}) == undefined;
 }
+
 SignUp.current_activity_id = function(){
     return localStorage.current_activity;
 }
+
 SignUp.render_sign_ups = function(activity_id){
     var sign_ups = JSON.parse(localStorage.sign_ups);
     return _.filter(sign_ups,function(s){return s.activity_id == activity_id})

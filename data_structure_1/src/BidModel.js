@@ -1,7 +1,9 @@
 function Bid(current_activity){
     this.biddings = [];
 }
+
 var bid = new Bid(localStorage.current_activity);
+
 Bid.prototype.create_new_bid = function(current_activity){
     var activities = JSON.parse(localStorage.activities);
     var current_activity = _.find(activities, function(activity){
@@ -11,6 +13,7 @@ Bid.prototype.create_new_bid = function(current_activity){
     current_activity.bids.push(bid);
     localStorage.setItem('activities',JSON.stringify(activities));
 }
+
 transform_bids_to_view_model = function(current_activity){
     var activities = JSON.parse(localStorage.activities);
     var current_activity = _.find(activities, function(activity){

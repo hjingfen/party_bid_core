@@ -4,6 +4,7 @@ function Activity(activity_name){
     this.bids = [];
     this.biddings = {};
 }
+
 Activity.prototype.create = function(){
     var activities = JSON.parse(localStorage.activities);
     var activity_ids = JSON.parse(localStorage.activity_ids);
@@ -15,6 +16,7 @@ Activity.prototype.create = function(){
     localStorage.activity_ids = JSON.stringify(activity_ids);
     localStorage.activity_id_generator = activity_id+1;
 }
+
 Activity.activity_ids = function(){
     return JSON.parse(localStorage.activity_ids).length;
 }

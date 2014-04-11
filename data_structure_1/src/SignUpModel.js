@@ -2,6 +2,7 @@ function SignUp(name,phone){
     this.name = name;
     this.phone = phone;
 }
+
 SignUp.process_sign_up_sms = function(sms_json){
     var activities = JSON.parse(localStorage.activities);
     var current_activity = localStorage.current_activity;
@@ -14,14 +15,16 @@ SignUp.process_sign_up_sms = function(sms_json){
         sign_ups.push(sign_up);
     }
     activities = _.map(activities, function(activity){
-        activity['name'] == current_activity ? activity['sign_ups'] = sign_ups : '';
+        activity['sign_ups'] = activity['name'] == current_activity ? sign_ups : '';
         return activity;
     });
     localStorage.setItem('activities',JSON.stringify(activities));
 }
+
 SignUp.is_not_sign_up = function(sign_ups,sign_up){
-    return _.find(sign_ups,function(s){return s.phone == sign_up.phone}) == undefined ? true:false;
+    return _.find(sign_ups,function(s){return s.phone == sign_up.phone}) == undefined;
 }
+
 SignUp.render_sign_ups = function(current_activity){
     var activities = JSON.parse(localStorage.activities);
     var current_activity = _.find(activities, function(activity){
