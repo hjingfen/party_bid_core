@@ -18,21 +18,25 @@ Bidding.process_bidding_sms = function(sms_json){
     var activities = JSON.parse(localStorage.activities);
     var current_activity_id = SignUp.current_activity_id();
     var bidddings = [];
-    var price = sms_json.messages[0].message.replace(/\s||\S/g,'').toLocaleLowerCase().replace(/^jj/,'');
-    var phone = sms_json.messages[0].phone;
-    var bidding = new Bidding(price,phone);
-    var is_sign_up = Bidding.is_sign_up(current_activity_id,bidding)
-    var is_not_bidding = Bidding.is_not_bidding(bidddings);
+    var bidding = Bidding.sms(sms_json);
+    var Is_bidding = Bidding.is_bidding(bidddings,bidding) && Bidding.is_sign_up(current_activity_id,bidding);
     var current_bid = localStorage.current_bid;
-    if(is_sign_up && is_not_bidding && localStorage.is_bidding == 'true'){
+    if(Is_bidding){
         bidddings.push(bidding);
         activities[current_activity_id].biddings[current_bid] = bidddings;
     }
     localStorage.setItem('activities',JSON.stringify(activities));
 }
 
-Bidding.is_not_bidding = function(biddings,bidding){
-    return _.find(biddings,function(b){return b.phone == bidding.phone}) == undefined;
+Bidding.sms = function(sms_json){
+    var price = sms_json.messages[0].message.replace(/\s||\S/g,'').toLocaleLowerCase().replace(/^jj/,'');
+    var phone = sms_json.messages[0].phone;
+    var bidding = new Bidding(price,phone);
+    return bidding;
+}
+
+Bidding.is_bidding = function(biddings,bidding){
+    return _.find(biddings,function(b){return b.phone == bidding.phone}) == undefined && localStorage.is_bidding == 'true';
 }
 
 Bidding.is_sign_up = function(current_activity_id,bidding){
