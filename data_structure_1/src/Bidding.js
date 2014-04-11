@@ -12,7 +12,7 @@ Bidding.process_bidding_sms = function(sms_json){
     var phone = sms_json.messages[0].phone;
     var bidding = new Bidding(price,phone);
     var is_sign_up = Bidding.is_sign_up(current_activity,bidding);
-    var is_not_bidding = Bidding.is_not_bidding(biddings);
+    var is_not_bidding = Bidding.is_not_bidding(biddings,bidding);
     if(is_sign_up && is_not_bidding && localStorage.is_bidding == 'true'){
         var sign_up_applicant = _.find(current_activity['sign_ups'],function(c){return c.phone == bidding.phone});
         bidding['name'] = sign_up_applicant.name;

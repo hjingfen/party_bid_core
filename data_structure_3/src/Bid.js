@@ -3,9 +3,9 @@ function Bid(){
 }
 Bid.create_new_bid = function(activity_id){
     var bids = JSON.parse(localStorage.bids);
-    this.activity_id = activity_id;
-    this.name = "竞价"+ (bids.length+1);
     var bid = new Bid;
+    bid['activity_id'] = activity_id;
+    bid['name'] = "竞价"+(bids.length+1);
     bids.push(bid);
     localStorage.setItem('bids',JSON.stringify(bids));
 }
