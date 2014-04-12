@@ -20,6 +20,7 @@ describe("Bid", function () {
     })
 
     it("should create new bid", function () {
+        var bid = new Bid();
         bid.create_new_bid("first activity");
 
         var activities = JSON.parse(localStorage.activities);

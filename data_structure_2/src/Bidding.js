@@ -50,13 +50,22 @@ transform_bids_to_view_model = function(current_activity_id){
 
 transform_biddings_to_view_model = function(current_activity_id,current_bid){
     var activities = JSON.parse(localStorage.activities);
-    var biddings = activities[current_activity_id].biddings[current_bid];
-    var min_not_repeat =  _.chain(biddings)
+    var min_not_repeat = Bidding.min_not_repeat(current_activity_id,current_bid);
+    var sign_up_applicant = _.find(activities[current_activity_id].sign_ups,function(c){return c.phone == min_not_repeat[0].phone});
+    min_not_repeat[0]['name'] = sign_up_applicant.name;
+    return min_not_repeat;
+}
+
+Bidding.biddings = function(current_activity_id,current_bid){
+    var activities = JSON.parse(localStorage.activities);
+    return activities[current_activity_id].biddings[current_bid];
+}
+
+Bidding.min_not_repeat = function(current_activity_id,current_bid){
+    var biddings = Bidding.biddings(current_activity_id,current_bid);
+    return _.chain(biddings)
         .sortBy(function(bidding){return bidding.price})
         .groupBy(function(bidding){return bidding.price})
         .find(function(bidding){return bidding.length == 1})
         .value();
-    var sign_up_applicant = _.find(activities[current_activity_id].sign_ups,function(c){return c.phone == min_not_repeat[0].phone});
-    min_not_repeat[0]['name'] = sign_up_applicant.name;
-    return min_not_repeat;
 }

@@ -5,7 +5,6 @@ function SignUp(name,phone,activity_id){
 }
 
 SignUp.process_sign_up_sms = function(sms_json){
-    var activities = JSON.parse(localStorage.activities);
     var sign_ups = [];
     var sign_up = SignUp.sms(sms_json);
     var is_sign_up = SignUp.is_sign_up(sign_ups,sign_up);

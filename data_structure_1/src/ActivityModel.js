@@ -4,12 +4,12 @@ function Activity(activity_name){
     this.bids = [];
 }
 
-Activity.prototype.create = function(activity_name){
+Activity.prototype.create = function(){
     var activities = JSON.parse(localStorage.activities);
     activities.push(this);
     localStorage.setItem('activities',JSON.stringify(activities));
 }
 
-Activity.prototype.active = function(activity_name){
-    localStorage.current_activity = activity_name;
+Activity.prototype.active = function(){
+    localStorage.current_activity = this.name;
 }

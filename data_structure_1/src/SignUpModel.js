@@ -12,9 +12,8 @@ SignUp.process_sign_up_sms = function(sms_json){
     if(is_sign_up){
         sign_ups.push(SignUp.sms(sms_json));
     }
-    activities = _.map(activities, function(activity){
+    _.map(activities, function(activity){
         activity['sign_ups'] = activity['name'] == current_activity ? sign_ups : '';
-        return activity;
     });
     localStorage.setItem('activities',JSON.stringify(activities));
 }

@@ -2,13 +2,11 @@ function Bid(){
     this.biddings = [];
 }
 
-var bid = new Bid();
-
 Bid.prototype.create_new_bid = function(current_activity){
     var activities = JSON.parse(localStorage.activities);
     var current_act = Bid.current_activity(activities,current_activity);
-    bid['name'] = "竞价"+(current_act.bids.length+1);
-    current_act.bids.push(bid);
+    this['name'] = "竞价"+(current_act.bids.length+1);
+    current_act.bids.push(this);
     localStorage.setItem('activities',JSON.stringify(activities));
 }
 

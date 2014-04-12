@@ -30,19 +30,13 @@ Bidding.is_bidding = function(biddings,bidding){
 }
 
 Bidding.is_sign_up = function(current_activity_id,bidding){
-    var sign_ups = JSON.parse(localStorage.sign_ups);
-    var current_sign_ups = _.filter(sign_ups,function(s){return s.activity_id == current_activity_id})
+    var current_sign_ups = SignUp.render_sign_ups(current_activity_id);
     return _.find(current_sign_ups,function(c){return c.phone == bidding.phone}) != undefined;
 }
 
 Bidding.render_biddings = function(activity_id,bid_name){
     var current_sign_ups = SignUp.render_sign_ups(activity_id);
-    var biddings = Bidding.biddings(activity_id,bid_name);
-    var min_not_repeat =  _.chain(biddings)
-        .sortBy(function(bidding){return bidding.price})
-        .groupBy(function(bidding){return bidding.price})
-        .find(function(bidding){return bidding.length == 1})
-        .value();
+    var min_not_repeat = Bidding.min_not_repeat(activity_id,bid_name)
     var sign_up_applicant = _.find(current_sign_ups,function(c){return c.phone == min_not_repeat[0].phone});
     min_not_repeat[0]['name'] = sign_up_applicant.name;
     return min_not_repeat;
@@ -50,6 +44,14 @@ Bidding.render_biddings = function(activity_id,bid_name){
 
 Bidding.biddings = function(activity_id,bid_name){
     var bids = JSON.parse(localStorage.bids);
-    var current_bid = _.find(bids,function(bid){return bid.activity_id == activity_id && bid.name == bid_name});
-    return current_bid.biddings;
+    return _.find(bids,function(bid){return bid.activity_id == activity_id && bid.name == bid_name}).biddings;
+}
+
+Bidding.min_not_repeat = function(activity_id,bid_name){
+    var biddings = Bidding.biddings(activity_id,bid_name);
+    return _.chain(biddings)
+        .sortBy(function(bidding){return bidding.price})
+        .groupBy(function(bidding){return bidding.price})
+        .find(function(bidding){return bidding.length == 1})
+        .value();
 }

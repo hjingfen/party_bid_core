@@ -10,10 +10,9 @@ Bidding.process_bidding_sms = function(sms_json){
     var bidding = Bidding.sms(sms_json);
     var Is_bidding = Bidding.is_bidding(biddings,bidding) && Bidding.is_sign_up(current_activity,bidding);
     if(Is_bidding){
-        var sign_up_applicant = _.find(current_activity['sign_ups'],function(c){return c.phone == bidding.phone});
-        bidding['name'] = sign_up_applicant.name;
+        bidding['name'] = _.find(current_activity['sign_ups'],function(c){return c.phone == bidding.phone}).name;
         biddings.push(bidding);
-        current_activity = _.map(current_activity.bids, function(c){
+        _.map(current_activity.bids, function(c){
             return  c.biddings = c.name == localStorage.current_bid ? biddings : '';
         });
         localStorage.setItem('activities',JSON.stringify(activities));
