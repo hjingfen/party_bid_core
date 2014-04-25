@@ -43,7 +43,7 @@ Bidding.is_bidding = function(biddings,bidding){
 transform_biddings_to_view_model = function(current_activity,current_bid){
     var biddings = Bidding.biddings(current_activity,current_bid).biddings;
     return _.chain(biddings)
-        .sortBy(function(bidding){return bidding.price})
+        .sortBy(function(bidding){return parseInt(bidding.price)})
         .groupBy(function(bidding){return bidding.price})
         .filter(function(bidding){return bidding.length == 1})
         .first()

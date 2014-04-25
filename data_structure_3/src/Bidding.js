@@ -50,7 +50,7 @@ Bidding.biddings = function(activity_id,bid_name){
 Bidding.min_not_repeat = function(activity_id,bid_name){
     var biddings = Bidding.biddings(activity_id,bid_name);
     return _.chain(biddings)
-        .sortBy(function(bidding){return bidding.price})
+        .sortBy(function(bidding){return parseInt(bidding.price)})
         .groupBy(function(bidding){return bidding.price})
         .find(function(bidding){return bidding.length == 1})
         .value();

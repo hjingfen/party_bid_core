@@ -64,7 +64,7 @@ Bidding.biddings = function(current_activity_id,current_bid){
 Bidding.min_not_repeat = function(current_activity_id,current_bid){
     var biddings = Bidding.biddings(current_activity_id,current_bid);
     return _.chain(biddings)
-        .sortBy(function(bidding){return bidding.price})
+        .sortBy(function(bidding){return parseInt(bidding.price)})
         .groupBy(function(bidding){return bidding.price})
         .find(function(bidding){return bidding.length == 1})
         .value();
